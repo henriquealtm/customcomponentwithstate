@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">CustomComponentWithState</string>
+
+    <!-- Select Food Options Screen -->
+    <string name="select_food_types">Select all the types you want:</string>
+    <string name="show_selected_values">Show selected values</string>
+    <string name="show_selected_values_prefix">Selected amount: </string>
+
+    <!-- Food Types -->
+    <string name="healthy">Healthy</string>
+    <string name="fast_food">Fast Food</string>
+
 </resources>
