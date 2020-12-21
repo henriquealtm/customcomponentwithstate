@@ -1,8 +1,9 @@
-package br.com.henriquealtmayer.customcomponentwithstate.components
+package br.com.henriquealtmayer.customcomponentwithstate.components.imagewithlabel
 
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import br.com.henriquealtmayer.customcomponentwithstate.components.imagewithlabel.ImageWithLabel
 
 @BindingAdapter("app:is_selected")
 fun ImageWithLabel.setIsSelected(

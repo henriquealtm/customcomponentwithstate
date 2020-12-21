@@ -4,20 +4,26 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import br.com.henriquealtmayer.customcomponentwithstate.commons.corona
+import br.com.henriquealtmayer.customcomponentwithstate.commons.eisenbahn
 import br.com.henriquealtmayer.customcomponentwithstate.commons.handleOptional
+import br.com.henriquealtmayer.customcomponentwithstate.commons.heineken
 
 open class MainViewModel : ViewModel() {
 
-    // Items
+    // Food type items
     val isHealthySelected = MutableLiveData(false)
-    val isFastFoodSelected = MutableLiveData(false)
+    val isFastFoodSelected = MutableLiveData(true)
 
-    private val itemsList = listOf(
+    private val foodTypeList = listOf(
         isHealthySelected,
         isFastFoodSelected
     )
 
-    // Show Selected Values Amount Message
+    val beerList = listOf(corona, heineken, eisenbahn)
+    val beerSelectedItem = MutableLiveData<String>()
+
+    // Show Selected Values
     @VisibleForTesting
     var selectedValuesMessagePrefix: String? = null
 
@@ -35,10 +41,9 @@ open class MainViewModel : ViewModel() {
 
     @VisibleForTesting
     fun getSelectedValuesMessage() =
-        "${selectedValuesMessagePrefix.handleOptional()} ${getSelectedValuesAmount()}"
-
+        "${selectedValuesMessagePrefix.handleOptional()} ${getSelectedValuesAmount()}, ${beerSelectedItem.value.handleOptional()}"
 
     @VisibleForTesting
-    fun getSelectedValuesAmount() = itemsList.filter { it.value.handleOptional() }.count()
+    fun getSelectedValuesAmount() = foodTypeList.filter { it.value.handleOptional() }.count()
 
 }

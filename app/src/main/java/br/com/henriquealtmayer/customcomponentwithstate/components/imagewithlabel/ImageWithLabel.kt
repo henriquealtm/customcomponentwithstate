@@ -1,4 +1,4 @@
-package br.com.henriquealtmayer.customcomponentwithstate.components
+package br.com.henriquealtmayer.customcomponentwithstate.components.imagewithlabel
 
 import android.content.Context
 import android.util.AttributeSet
@@ -37,18 +37,6 @@ class ImageWithLabel @JvmOverloads constructor(
 
     init {
         LayoutInflater.from(context).inflate(R.layout.image_with_label, this, true)
-
-        attrs?.let {
-            context.obtainStyledAttributes(
-                attrs,
-                R.styleable.ImageWithLabel, 0, 0
-            ).apply {
-                text = getString(R.styleable.ImageWithLabel_text)
-                image = getResourceId(R.styleable.ImageWithLabel_image, 0)
-
-                recycle()
-            }
-        }
 
         initializeComponents()
 

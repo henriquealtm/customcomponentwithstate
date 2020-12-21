@@ -7,7 +7,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class MainActivityUnitTest {
+class MainViewModelUnitTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -27,8 +27,8 @@ class MainActivityUnitTest {
     }
 
     @Test
-    fun `verify if isFastFoodSelected is false when creating MainViewModel`() {
-        assertFalse(mainVm.isFastFoodSelected.value.handleOptional())
+    fun `verify if isFastFoodSelected is true when creating MainViewModel`() {
+        assertTrue(mainVm.isFastFoodSelected.value.handleOptional())
     }
 
     // Message Prefix
@@ -74,7 +74,7 @@ class MainActivityUnitTest {
     }
 
     @Test
-    fun `verify if getSelectedValuesMessage() returns selectedValuesMessagePrefix + getSelectedValuesAmount() get when both selectableItems are false`() {
+    fun `verify if getSelectedValuesMessage() returns selectedValuesMessagePrefix + getSelectedValuesAmount()`() {
         mainVm.run {
             val prefixParam = "Prefix param"
             initViewModel(prefixParam)
@@ -82,7 +82,12 @@ class MainActivityUnitTest {
             isHealthySelected.value = true
             isFastFoodSelected.value = true
 
-            assertEquals("$prefixParam 2", getSelectedValuesMessage())
+            // Selected beer
+            val beer = "Corona"
+            beerSelectedItem.value = beer
+
+
+            assertEquals("$prefixParam 2, $beer", getSelectedValuesMessage())
         }
     }
 
@@ -96,9 +101,16 @@ class MainActivityUnitTest {
             isHealthySelected.value = true
             isFastFoodSelected.value = true
 
+            // Selected beer
+            val beer = "Corona"
+            beerSelectedItem.value = beer
+
             showSelectedValuesAmountMessage()
 
-            assertEquals("$prefixParam 2", showSelectedValuesAmountMessage.value.handleOptional())
+            assertEquals(
+                "$prefixParam 2, $beer",
+                showSelectedValuesAmountMessage.value.handleOptional()
+            )
         }
     }
 

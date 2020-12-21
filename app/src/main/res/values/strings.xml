@@ -4,7 +4,7 @@
     <!-- Select Food Options Screen -->
     <string name="select_food_types">Select all the types you want:</string>
     <string name="show_selected_values">Show selected values</string>
-    <string name="show_selected_values_prefix">Selected amount: </string>
+    <string name="show_selected_values_prefix">Selected food types amount: </string>
 
     <!-- Food Types -->
     <string name="healthy">Healthy</string>
