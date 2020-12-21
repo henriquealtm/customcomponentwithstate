@@ -4,10 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import br.com.henriquealtmayer.customcomponentwithstate.R
 import br.com.henriquealtmayer.customcomponentwithstate.commons.handleOptional
 import kotlinx.android.synthetic.main.image_with_label.view.*
@@ -32,7 +32,7 @@ class ImageWithLabel @JvmOverloads constructor(
             }
         }
 
-    val selected = MutableLiveData(false)
+    val isSelected = MutableLiveData(false)
     var selectedCallbackAdapter: (() -> Unit)? = null
 
     init {
@@ -65,27 +65,34 @@ class ImageWithLabel @JvmOverloads constructor(
 
     private fun initializeOnClickListener() {
         setOnClickListener {
-            selected.value = selected.value?.not()
+            isSelected.value = isSelected.value?.not()
 
             selectedCallbackAdapter?.invoke()
         }
     }
 
     private fun initializeObservers() {
-        (context as? LifecycleOwner?)?.let { lifecycleOwner ->
-            selected.observe(lifecycleOwner, Observer {
-                val color = ContextCompat.getColor(
-                    context, if (selected.value.handleOptional()) {
-                        R.color.image_with_label_selected
-                    } else {
-                        R.color.image_with_label_unselected
-                    }
-                )
+        val lifecycleOwner = (context as? LifecycleOwner?) ?: return
 
+        isSelected.observe(lifecycleOwner, {
+            getImageWithLabelColor().let { color ->
                 tv_image_with_label.setTextColor(color)
                 iv_image_with_label.setColorFilter(color)
-            })
-        }
+            }
+        })
     }
 
+    private fun getImageWithLabelColor() = ContextCompat.getColor(
+        context,
+        getImageWithLabelIdColor(isSelected.value.handleOptional())
+    )
+
 }
+
+@VisibleForTesting
+fun getImageWithLabelIdColor(selectedValue: Boolean) =
+    if (selectedValue) {
+        R.color.image_with_label_selected
+    } else {
+        R.color.image_with_label_unselected
+    }
